@@ -25,7 +25,7 @@ CREATE TABLE score_by_ball
 
 INSERT INTO score_by_ball (match_id, innings_no, ball_no, striker_id, non_striker_id, bowler_id, runs_off_bat, extras, wides, 
                             noballs, byes, legbyes, penalty, wicket_type, dismissed_player_id)
-VALUES   (1,1,0.1,1,2,21,0,1,1,NULL,NULL,NULL,NULL,NULL,NULL),
+VALUES  (1,1,0.1,1,2,21,0,1,1,NULL,NULL,NULL,NULL,NULL,NULL),
         (1,1,0.2,1,2,21,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
         (1,1,0.3,2,1,21,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
         (1,1,0.4,2,1,21,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
