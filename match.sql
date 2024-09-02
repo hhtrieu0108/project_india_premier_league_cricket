@@ -9,4 +9,4 @@ CREATE TABLE match
 INSERT INTO "match" (match_id, match_date, venue_id)
 VALUES  (1,'2024-03-22',1);
 
-SELECT * FROM match
+SELECT * FROM "match";
