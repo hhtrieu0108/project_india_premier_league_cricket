@@ -16,19 +16,15 @@ Match level information Required
 3. Match Date
 4. Winning Team Name
 */
-
-SELECT  m.match_id,
-        m.match_date,
-        v.venue_name
-FROM match m JOIN venue v ON (m.venue_id = v.venue_id);
-
-SELECT m.match_id,
+SELECT 
+        m.match_id,
         m.match_date,
         v.venue_name,
         t.team_name AS winning_team_name
-FROM match m JOIN venue v ON (m.venue_id = v.venue_id)
-                        JOIN result r ON (m.match_id = r.match_id)
-                        JOIN team t ON (r.winning_team_id = t.team_id);
+FROM 
+        match m JOIN venue v ON (m.venue_id = v.venue_id)
+                JOIN result r ON (m.match_id = r.match_id)
+                JOIN team t ON (r.winning_team_id = t.team_id);
 
 
 /*
