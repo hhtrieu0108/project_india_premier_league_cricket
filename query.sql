@@ -36,7 +36,8 @@ Innings level information Required
 4. Total overs played
 */
 
-SELECT  i.match_id,
+SELECT  
+        i.match_id,
         i.innings_no,
         t.team_name,
         SUM(s.runs_off_bat +  s.extras) AS total_runs,
@@ -47,9 +48,11 @@ SELECT  i.match_id,
                         || '.' 
                         ||  CAST((MOD ((COUNT(*) - COUNT(wides) - COUNT(noballs)), 6)) AS INTEGER) 
         END AS total_overs
-FROM innings i JOIN team t ON (i.batting_team_id = t.team_id)
+FROM 
+        innings i JOIN team t ON (i.batting_team_id = t.team_id)
                 JOIN score_by_ball s ON (i.match_id = s.match_id AND i.innings_no = s.innings_no)
-GROUP BY i.match_id,
+GROUP BY 
+        i.match_id,
         i.innings_no,
         t.team_name;
 
@@ -67,7 +70,8 @@ Information Required
 7. Strike Rate
 */
 
-SELECT  i.match_id,
+SELECT  
+        i.match_id,
         i.innings_no,
         t.team_name AS batting_team_name,
         p.player_name AS batsman_name,
@@ -76,17 +80,21 @@ SELECT  i.match_id,
         SUM(IIF(s.runs_off_bat = 4, 1, 0)) AS no_of_fours,
         SUM(IIF(s.runs_off_bat = 6, 1, 0)) AS no_of_sixes,
         FORMAT("%.2f", (CAST(sum(runs_off_bat) AS REAL) / CAST(COUNT(*) AS REAL)) * 100) AS strike_rate
-FROM innings i JOIN team t ON (i.batting_team_id = t.team_id)
+FROM 
+        innings i JOIN team t ON (i.batting_team_id = t.team_id)
                 JOIN score_by_ball s ON (i.match_id = s.match_id AND i.innings_no = s.innings_no)
                 JOIN player p ON (s.striker_id = p.player_id)
-WHERE s.wides IS NULL AND s.noballs IS NULL
-GROUP BY i.match_id,
-                i.innings_no,
-                t.team_name,
-                p.player_name 
-ORDER BY  i.match_id,
-                i.innings_no,
-                MIN(s.ball_no)  ;
+WHERE 
+        s.wides IS NULL AND s.noballs IS NULL
+GROUP BY 
+        i.match_id,
+        i.innings_no,
+        t.team_name,
+        p.player_name 
+ORDER BY  
+        i.match_id,
+        i.innings_no,
+        MIN(s.ball_no)  ;
 
 -- Batting Summary (Extras)
 /*
@@ -101,7 +109,8 @@ Information Required
 7. penalities
 */
 
-SELECT  i.match_id,
+SELECT  
+        i.match_id,
         i.innings_no,
         t.team_name AS batting_team_name,
         SUM(s.extras) AS total_extras,
@@ -110,9 +119,11 @@ SELECT  i.match_id,
         SUM(IFNULL(s.byes, 0)) AS total_byes,
         SUM(IFNULL(s.legbyes, 0)) AS total_legbyes,
         SUM(IFNULL(s.penalty, 0)) AS total_penalty
-FROM innings i JOIN team t ON (i.batting_team_id = t.team_id)
+FROM 
+        innings i JOIN team t ON (i.batting_team_id = t.team_id)
                 JOIN score_by_ball s ON (i.match_id = s.match_id AND i.innings_no = s.innings_no)
-GROUP BY  i.match_id,
+GROUP BY 
+        i.match_id,
         i.innings_no,
         t.team_name  ;
 
@@ -131,7 +142,8 @@ Information Required
 7. Dots
 */
 
-SELECT  i.match_id,
+SELECT  
+        i.match_id,
         i.innings_no,
         t.team_name,
         p.player_name AS bowler_name,
@@ -148,13 +160,16 @@ SELECT  i.match_id,
                         /   (CAST((COUNT(*) - COUNT(wides) - COUNT(noballs)) AS REAL) / 6) 
                 , 2)  AS economy,
         SUM(IIF(s.runs_off_bat = 0 AND s.wides IS NULL AND s.noballs IS NULL, 1, 0)) AS dots
-FROM innings i JOIN team t ON (i.batting_team_id = t.team_id)
+FROM 
+        innings i JOIN team t ON (i.batting_team_id = t.team_id)
                 JOIN score_by_ball s ON (i.match_id = s.match_id AND i.innings_no = s.innings_no)
                 JOIN player p ON (s.bowler_id = p.player_id)
-GROUP BY i.match_id,
+GROUP BY 
+        i.match_id,
         i.innings_no,
         t.team_name,
         p.player_name
-ORDER BY  i.match_id,
+ORDER BY  
+        i.match_id,
         i.innings_no,
         MIN(s.ball_no);
