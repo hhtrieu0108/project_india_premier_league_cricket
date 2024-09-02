@@ -145,7 +145,7 @@ Information Required
 SELECT  
         i.match_id,
         i.innings_no,
-        t.team_name,
+        t.team_name as bowling_team_name,
         p.player_name AS bowler_name,
         CASE WHEN MOD ((COUNT(*) - COUNT(wides) - COUNT(noballs)), 6) = 0 -- Check to see if there are any remaining balls
                 THEN (COUNT(*) - COUNT(wides) - COUNT(noballs)) / 6 -- Just output the overs as there are no remaining balls
@@ -161,7 +161,7 @@ SELECT
                 , 2)  AS economy,
         SUM(IIF(s.runs_off_bat = 0 AND s.wides IS NULL AND s.noballs IS NULL, 1, 0)) AS dots
 FROM 
-        innings i JOIN team t ON (i.batting_team_id = t.team_id)
+        innings i JOIN team t ON (i.bowling_team_id = t.team_id)
                 JOIN score_by_ball s ON (i.match_id = s.match_id AND i.innings_no = s.innings_no)
                 JOIN player p ON (s.bowler_id = p.player_id)
 GROUP BY 
