@@ -1,30 +1,30 @@
 CREATE TABLE score_by_ball
 (   
-    match_id    INTEGER ,
-    innings_no   INTEGER ,
-    ball_no    FLOAT ,
-    striker_id   INTEGER  ,
-    non_striker_id   INTEGER  ,
-    bowler_id    INTEGER ,
-    runs_off_bat    INTEGER ,
-    extras    INTEGER ,
+    match_id    INTEGER NOT NULL ,
+    innings_no   INTEGER NOT NULL,
+    ball_no    FLOAT  NOT NULL,
+    striker_id   INTEGER  NOT NULL,
+    non_striker_id   INTEGER NOT NULL,
+    bowler_id    INTEGER NOT NULL,
+    runs_off_bat    INTEGER NOT NULL,
+    extras    INTEGER NOT NULL,
     wides   INTEGER ,
     noballs   INTEGER ,
     byes    INTEGER ,
     legbyes   INTEGER ,
     penalty   INTEGER ,
     wicket_type   VARCHAR(200)  ,
-    dismissed_player_id    INTEGER,
+    dismissed_batsman_id    INTEGER,
     PRIMARY KEY (match_id, innings_no, ball_no),
     FOREIGN KEY (match_id, innings_no) REFERENCES innings(match_id, innings_no),
     FOREIGN KEY (striker_id) REFERENCES player(player_id),
     FOREIGN KEY (non_striker_id) REFERENCES player(player_id),
     FOREIGN KEY (bowler_id) REFERENCES player(player_id),
-    FOREIGN KEY (dismissed_player_id) REFERENCES player(player_id)
+    FOREIGN KEY (dismissed_batsman_id) REFERENCES player(player_id)
 );
 
 INSERT INTO score_by_ball (match_id, innings_no, ball_no, striker_id, non_striker_id, bowler_id, runs_off_bat, extras, wides, 
-                            noballs, byes, legbyes, penalty, wicket_type, dismissed_player_id)
+                            noballs, byes, legbyes, penalty, wicket_type, dismissed_batsman_id)
 VALUES  (1,1,0.1,1,2,21,0,1,1,NULL,NULL,NULL,NULL,NULL,NULL),
         (1,1,0.2,1,2,21,1,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
         (1,1,0.3,2,1,21,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
