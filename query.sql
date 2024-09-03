@@ -109,7 +109,7 @@ Information Required
 7. penalities
 */
 
-SELECT  
+SELECT   
         i.match_id,
         i.innings_no,
         t.team_name AS batting_team_name,
